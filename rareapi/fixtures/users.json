@@ -1,0 +1,56 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "password",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "jcarter",
+            "first_name": "Katie",
+            "last_name": "Zarbock",
+            "email": "katie@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-10-21T21:15:55.764Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "password",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "juicy",
+            "first_name": "Logan",
+            "last_name": "Welch",
+            "email": "logan@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-10-21T21:16:33.812Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "password": "password",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "babydaddy",
+            "first_name": "Casey",
+            "last_name": "Furby",
+            "email": "casey@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-10-21T21:16:33.812Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]
