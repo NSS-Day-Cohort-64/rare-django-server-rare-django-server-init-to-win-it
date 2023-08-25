@@ -1,0 +1,35 @@
+[
+    {
+        "model": "rareapi.post",
+        "pk": 1,
+        "fields": {
+            "author": 1,
+            "title": "Taylor Swift Fan Club?",
+            "category": 1,
+            "publication_date": "2023-08-26T15:00:00Z",
+            "content": "Who wants to start a fan club for cat ladies?"
+        }
+    },
+    {
+        "model": "rareapi.post",
+        "pk": 2,
+        "fields": {
+            "author": 2,
+            "title": "Do you like my Juicy Couture?",
+            "category": 2,
+            "publication_date": "2023-08-26T15:00:00Z",
+            "content": "Do you respect men who wear Juicy Couture tracksuits?"
+        }
+    },
+    {
+        "model": "rareapi.post",
+        "pk": 3,
+        "fields": {
+            "author": 3,
+            "title": "Bowling Night",
+            "category": 3,
+            "publication_date": "2023-08-26T15:00:00Z",
+            "content": "I'm hosting a bowling night at the local bowling alley. Who wants to come?"
+        }
+    }
+]
