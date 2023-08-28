@@ -32,7 +32,7 @@ class CategoryView(ViewSet):
             label=request.data["label"],
         )
         serializer = CategorySerializer(category)
-        return Response(serializer.data)
+        return Response(None, status=status.HTTP_201_CREATED)
     
     def update(self, request, pk):
         category = Category.objects.get(pk=pk)

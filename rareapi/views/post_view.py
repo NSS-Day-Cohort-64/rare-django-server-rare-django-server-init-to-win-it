@@ -39,7 +39,7 @@ class PostView(ViewSet):
             content = request.data["content"]
         )
         serializer = PostSerializer(post)
-        return Response(serializer.data)
+        return Response(None, status=status.HTTP_201_CREATED)
     
     def update(self, request, pk):
         post = Post.objects.get(pk=pk)
