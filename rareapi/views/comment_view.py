@@ -38,7 +38,7 @@ class CommentView(ViewSet):
             content = request.data["content"]
         )
         serializer = CommentSerializer(comment)
-        return Response(serializer.data)
+        return Response(None, status=status.HTTP_201_CREATED)
     
     def update(self, request, pk):
         comment = Comment.objects.get(pk=pk)
