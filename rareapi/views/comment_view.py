@@ -3,9 +3,9 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from rareapi.models import Post, Author, Category
+from rareapi.models import Comment, Author, Post
 
-class PostView(ViewSet):
+class CommentView(ViewSet):
     """Level up game types view"""
 
     def retrieve(self, request, pk):
@@ -13,8 +13,8 @@ class PostView(ViewSet):
         Returns:
             Response -- JSON serialized game type
         """
-        post = Post.objects.get(pk=pk)
-        serializer = PostSerializer(post)
+        comment = Comment.objects.get(pk=pk)
+        serializer = CommentSerializer(comment)
         return Response(serializer.data)
 
     def list(self, request):
@@ -23,42 +23,42 @@ class PostView(ViewSet):
         Returns:
             Response -- JSON serialized list of game types
         """
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
     
     def create(self, request):
         author = Author.objects.get(user=request.auth.user)
-        category = Category.objects.get(pk=request.data["category"])
+        post = Post.objects.get(pk=request.data["post"])
 
-        post = Post.objects.create(
+        comment = Comment.objects.create(
             author = author,
-            title = request.data["title"],
-            category = category,
-            publication_date = request.data["publication_date"],
+            post = post,
+            time_stamp = request.data["time_stamp"],
             content = request.data["content"]
         )
-        serializer = PostSerializer(post)
+        serializer = CommentSerializer(comment)
         return Response(serializer.data)
     
     def update(self, request, pk):
-        post = Post.objects.get(pk=pk)
-        post.title = request.data["title"]
-        post.category = Category.objects.get(pk=request.data["category"])
-        post.content = request.data["content"]
-        post.save()
+        comment = Comment.objects.get(pk=pk)
+        comment.author = Author.objects.get(user=request.auth.user)
+        comment.post = Post.objects.get(pk=request.data["post"])
+        comment.time_stamp = request.data["time_stamp"]
+        comment.content = request.data["content"]
+        comment.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     def destroy(self, request, pk):
-        post = Post.objects.get(pk=pk)
-        post.delete()
+        comment = Comment.objects.get(pk=pk)
+        comment.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 
-class PostSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     """JSON serializer for customers"""
 
     class Meta:
-        model = Post
-        fields = ('id', 'author', 'title', 'category', 'publication_date', 'content')
+        model = Comment
+        fields = ('id', 'author', 'post', 'time_stamp', 'content')
