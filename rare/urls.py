@@ -16,6 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rareapi.views import TagView
+
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'tags', TagView, 'tag')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
