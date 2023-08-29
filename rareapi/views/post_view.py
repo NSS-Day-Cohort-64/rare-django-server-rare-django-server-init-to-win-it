@@ -54,10 +54,20 @@ class PostView(ViewSet):
         post = Post.objects.get(pk=pk)
         post.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
-        
+
+class CategoryPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('label' ,)
+
+class AuthorPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Author
+        fields = ('full_name' ,)
 
 class PostSerializer(serializers.ModelSerializer):
-    """JSON serializer for customers"""
+    author = AuthorPostSerializer(many=False)
+    category = CategoryPostSerializer(many=False)
 
     class Meta:
         model = Post

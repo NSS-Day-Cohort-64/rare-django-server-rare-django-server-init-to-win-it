@@ -2,5 +2,10 @@
     "python.linting.pylintArgs": [
         "--load-plugins=pylint_django",
         "--django-settings-module=rare.settings",
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#032D5C",
+        "titleBar.activeBackground": "#043F81",
+        "titleBar.activeForeground": "#F6FAFF"
+    }
 }
