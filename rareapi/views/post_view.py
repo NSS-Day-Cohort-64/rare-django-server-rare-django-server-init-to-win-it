@@ -3,7 +3,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from rareapi.models import Post, Author, Category
+from rareapi.models import Post, Author, Category, Tag
 
 class PostView(ViewSet):
     """Level up game types view"""
@@ -28,19 +28,22 @@ class PostView(ViewSet):
         return Response(serializer.data)
     
     def create(self, request):
+        print(request.data)
         author = Author.objects.get(user=request.auth.user)
         category = Category.objects.get(pk=request.data["category"])
+        tags = Tag.objects.filter(pk__in=request.data["tags"])
 
         post = Post.objects.create(
             author = author,
             title = request.data["title"],
             category = category,
-            publication_date = request.data["publication_date"],
             content = request.data["content"]
         )
+        
+        post.tags.set(tags)
         serializer = PostSerializer(post)
-        return Response(None, status=status.HTTP_201_CREATED)
-    
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     def update(self, request, pk):
         post = Post.objects.get(pk=pk)
         post.title = request.data["title"]
