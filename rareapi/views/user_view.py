@@ -4,6 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from django.contrib.auth.models import User
+from rareapi.models import Author
 
 class UserView(ViewSet):
     """Level up game types view"""
@@ -14,7 +15,9 @@ class UserView(ViewSet):
             Response -- JSON serialized game type
         """
         user = User.objects.get(pk=pk)
+        author = Author.objects.get(user=user)
         serializer = UserSerializer(user)
+        serializer = AuthorSerializer(author)
         return Response(serializer.data)
 
     def list(self, request):
@@ -27,9 +30,16 @@ class UserView(ViewSet):
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
+class AuthorSerializer(serializers.ModelSerializer):
+    """JSON serializer for customers"""
+
+    class Meta:
+        model = Author
+        fields = ('id', 'user', 'bio', 'full_name', 'email', 'username', 'date_joined', 'is_staff')
+
 class UserSerializer(serializers.ModelSerializer):
     """JSON serializer for customers"""
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'last_name', 'first_name', 'email')
+        fields = ('id', 'username', 'last_name', 'first_name', 'email', 'date_joined', 'is_staff')
