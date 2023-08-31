@@ -18,12 +18,13 @@ class CategoryView(ViewSet):
         return Response(serializer.data)
 
     def list(self, request):
-        """Handle GET requests to get all game types
+        """Handle GET requests to get all game types (categories)
 
         Returns:
-            Response -- JSON serialized list of game types
+            Response -- JSON serialized list of game types (categories)
         """
-        categories = Category.objects.all()
+
+        categories = Category.objects.all().order_by('label')  # Sorting alphabetically by name
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
     

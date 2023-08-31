@@ -15,7 +15,7 @@ class TagView(ViewSet):
             Response -- JSON serialized list of tags
         """
 
-        tags = Tag.objects.all()
+        tags = Tag.objects.all().order_by('label')  # Sorting alphabetically by label
         serialized = TagSerializer(tags, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
     
