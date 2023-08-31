@@ -61,7 +61,7 @@ class PostView(ViewSet):
 class CategoryPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('label' ,)
+        fields = ('id', 'label')
 
 class AuthorPostSerializer(serializers.ModelSerializer):
     class Meta:
