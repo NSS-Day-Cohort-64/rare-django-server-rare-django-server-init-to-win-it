@@ -3,7 +3,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from rareapi.models import Post, Author, Category, Tag
+from rareapi.models import Post, Author, Category, Tag, Comment
 
 class PostView(ViewSet):
     """Level up game types view"""
@@ -68,10 +68,17 @@ class AuthorPostSerializer(serializers.ModelSerializer):
         model = Author
         fields = ('full_name' ,)
 
+class CommentSerializer(serializers.ModelSerializer):
+    author = AuthorPostSerializer(many=False)
+    class Meta:
+        model = Comment
+        fields = ('id', 'author', 'post', 'time_stamp', 'content')
+
 class PostSerializer(serializers.ModelSerializer):
     author = AuthorPostSerializer(many=False)
     category = CategoryPostSerializer(many=False)
+    comments = CommentSerializer(many=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'author', 'title', 'category', 'publication_date', 'content')
+        fields = ('id', 'author', 'title', 'category', 'publication_date', 'content', 'comments')

@@ -18,14 +18,20 @@ class CommentView(ViewSet):
         return Response(serializer.data)
 
     def list(self, request):
-        """Handle GET requests to get all game types
+        """Handle GET requests to get all comments associated with a post
 
         Returns:
             Response -- JSON serialized list of game types
         """
+        # Fetch all comments
+        comments = []
         comments = Comment.objects.all()
+        post_id = request.query_params.get('post_id', None)
+        if post_id is not None:
+            comments = Comment.objects.filter(post_id=post_id)
+
         serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def create(self, request):
         author = Author.objects.get(user=request.auth.user)
@@ -56,9 +62,15 @@ class CommentView(ViewSet):
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 
+class AuthorPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Author
+        fields = ('full_name' ,)
+
 class CommentSerializer(serializers.ModelSerializer):
     """JSON serializer for customers"""
-
+    author = AuthorPostSerializer(many=False)
+    
     class Meta:
         model = Comment
         fields = ('id', 'author', 'post', 'time_stamp', 'content')
