@@ -3,9 +3,9 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from rareapi.models import Author
+from django.contrib.auth.models import User
 
-class AuthorView(ViewSet):
+class UserView(ViewSet):
     """Level up game types view"""
 
     def retrieve(self, request, pk):
@@ -13,8 +13,8 @@ class AuthorView(ViewSet):
         Returns:
             Response -- JSON serialized game type
         """
-        author = Author.objects.get(pk=pk)
-        serializer = AuthorSerializer(author)
+        user = User.objects.get(pk=pk)
+        serializer = UserSerializer(user)
         return Response(serializer.data)
 
     def list(self, request):
@@ -23,13 +23,13 @@ class AuthorView(ViewSet):
         Returns:
             Response -- JSON serialized list of game types
         """
-        authors = Author.objects.all()
-        serializer = AuthorSerializer(authors, many=True)
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
-class AuthorSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     """JSON serializer for customers"""
 
     class Meta:
-        model = Author
-        fields = ('id', 'user', 'bio', 'full_name')
+        model = User
+        fields = ('id', 'username', 'last_name', 'first_name', 'email')
